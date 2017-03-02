@@ -1,0 +1,41 @@
+{
+  "nodes": {
+    "node01.example.com": {
+      ":ip": "192.168.32.10",
+      "ports": [
+{
+          ":host": 80,
+          ":guest": 80,
+          ":id": "http"
+}
+],
+      ":memory": 512,
+      ":bootstrap": "bootstrap-node.sh"
+    },
+    "web01.example.com": {
+      ":ip": "192.168.32.20",
+      "ports": [
+{
+          ":host": 81,
+          ":guest": 80,
+          ":id": "http"
+}
+],
+      ":memory": 512,
+      ":bootstrap": "bootstrap-node.sh"
+    },
+    "web02.example.com": {
+      ":ip": "192.168.32.30",
+      "ports": [
+{
+          ":host": 82,
+          ":guest": 80,
+          ":id": "http"
+}
+],
+      ":memory": 512,
+      ":bootstrap": "bootstrap-node.sh"
+    }
+
+  }
+}
