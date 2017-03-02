@@ -1,6 +1,6 @@
 Devops Test
 =========================
-TThis has been a great tests to do as was quite a bit of fun. Just for you info, I took a few months off work to travel the world with my Wife and daughters (currently in Thailand. I'm back in April so I've been making contact with UK IT agencies. 
+This has been a great exercise to do as was quite a bit of fun. Just for you info, I took a few months off work to travel the world with my Wife and daughters (currently in Thailand). I'm back in April so I've been making contact with UK IT agencies. 
 
 Setup
 --------
