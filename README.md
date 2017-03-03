@@ -1,6 +1,6 @@
 Devops Test
 =========================
-This has been a great exercise to do as was quite a bit of fun. Just for you info, I took a few months off work to travel the world with my Wife and daughters (currently in Thailand). I'm back to the UK in April. 
+This has been a great exercise to do as was quite a bit of fun. Just for your infomation, I took a few months off work to travel the world with my Wife and daughters (currently in Thailand). I'm back to the UK in April. 
 
 All of the Vagrant code was developed on a windows 10 laptop. I had no access to "vagrant ssh" and had to puttygen the key provided into a .ppk file. Then i could use puppet to login to the vagrant VMs. When i access the website, I need to use http://127.0.0.1 due to the way vagrant work on my PC. If i was on a Linux PC (Mine is back in the UK) i would access the website from the Server IP address or name.
 
