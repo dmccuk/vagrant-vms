@@ -5,8 +5,20 @@
 if ps aux | grep "puppet agent" | grep -v grep 2> /dev/null
 then
     echo "Puppet Agent is already installed. Moving on..."
-    sudo puppet agent -t
+    # Configure /etc/hosts file
+  if cat /etc/hosts | grep puppet 2> /dev/null
+  then
     exit 0
+  else
+    echo "" | sudo tee --append /etc/hosts 2> /dev/null && \
+    echo "# Host config for Puppet Master and Agent Nodes" | sudo tee --append /etc/hosts 2> /dev/null && \
+    echo "192.168.32.5    puppet.example.com  puppet" | sudo tee --append /etc/hosts 2> /dev/null && \
+    echo "192.168.32.10   node01.example.com  puppet" | sudo tee --append /etc/hosts 2> /dev/null && \
+    echo "192.168.32.20   web01.example.com  web01" | sudo tee --append /etc/hosts 2> /dev/null && \
+    echo "192.168.32.30   web02.example.com  web02" | sudo tee --append /etc/hosts 2> /dev/null
+	sudo puppet agent -t
+      exit 0
+  fi
 else
     sudo apt-get update -yq
     sudo apt-get upgrade -yq
@@ -38,7 +50,8 @@ else
 
     sudo puppet agent --enable
 fi
-# Give puppet time to auto sign the certificate and kick off a run.
+# Enable puppet and give puppet time to auto sign the certificate and kick off a run.
+    sudo puppet agent --enable
     sudo puppet agent -t --waitforcert 15
 # added the code below as puppet runs produced a non-zero exit.
     exit 0
