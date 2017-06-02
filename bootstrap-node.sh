@@ -40,5 +40,5 @@ else
 fi
 # Give puppet time to auto sign the certificate and kick off a run.
     sudo puppet agent -t --waitforcert 15
-# added the code below as puppet runs produced a non-zero exit. Adding this for now keeps the vagrant run on track while I figure out the puppet issue and vagrant.
+# added the code below as puppet runs produced a non-zero exit.
     exit 0
