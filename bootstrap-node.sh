@@ -2,56 +2,19 @@
 
 # Run on VM to bootstrap Puppet Agent nodes
 
-if ps aux | grep "puppet agent" | grep -v grep 2> /dev/null
-then
-    echo "Puppet Agent is already installed. Moving on..."
-    # Configure /etc/hosts file
-  if cat /etc/hosts | grep puppet 2> /dev/null
-  then
-    exit 0
-  else
     echo "" | sudo tee --append /etc/hosts 2> /dev/null && \
     echo "# Host config for Puppet Master and Agent Nodes" | sudo tee --append /etc/hosts 2> /dev/null && \
     echo "192.168.32.5    puppet.example.com  puppet" | sudo tee --append /etc/hosts 2> /dev/null && \
-    echo "192.168.32.10   node01.example.com  puppet" | sudo tee --append /etc/hosts 2> /dev/null && \
-    echo "192.168.32.20   web01.example.com  web01" | sudo tee --append /etc/hosts 2> /dev/null && \
-    echo "192.168.32.30   web02.example.com  web02" | sudo tee --append /etc/hosts 2> /dev/null
-	sudo puppet agent -t
-      exit 0
-  fi
-else
-    sudo apt-get update -yq
-    sudo apt-get upgrade -yq
-    sudo apt-get install -yq puppet
-fi
+    echo "192.168.32.10   dc1pweb01.example.com  dc1pweb01" | sudo tee --append /etc/hosts 2> /dev/null && \
+    echo "192.168.32.20   dc1dapp01.example.com  dc1dapp01" | sudo tee --append /etc/hosts 2> /dev/null && \
+    echo "192.168.32.30   dc2pweb01.example.com  dc2pweb01" | sudo tee --append /etc/hosts 2> /dev/null
 
-if cat /etc/crontab | grep puppet 2> /dev/null
-then
-    echo "Puppet Agent is already configured. Exiting..."
-    exit 0
-else
-# Add a cron for puppet to run every 30 mins.
-    sudo puppet resource cron puppet-agent ensure=present user=root minute=30 \
-        command='/usr/bin/puppet agent --onetime --no-daemonize --splay'
+     sudo wget https://apt.puppetlabs.com/puppetlabs-release-pc1-xenial.deb
+     sudo dpkg -i puppetlabs-release-pc1-xenial.deb
+     sudo apt-get update
+     sudo apt-get install puppet-agent
+     sudo systemctl start puppet
+     sudo systemctl enable puppet
+     sudo apt-get install git -yq
+     exit 0
 
-    sudo puppet resource service puppet ensure=running enable=true
-
-    # Configure /etc/hosts file
-    echo "" | sudo tee --append /etc/hosts 2> /dev/null && \
-    echo "# Host config for Puppet Master and Agent Nodes" | sudo tee --append /etc/hosts 2> /dev/null && \
-    echo "192.168.32.5    puppet.example.com  puppet" | sudo tee --append /etc/hosts 2> /dev/null && \
-    echo "192.168.32.10   node01.example.com  puppet" | sudo tee --append /etc/hosts 2> /dev/null && \
-    echo "192.168.32.20   web01.example.com  web01" | sudo tee --append /etc/hosts 2> /dev/null && \
-    echo "192.168.32.30   web02.example.com  web02" | sudo tee --append /etc/hosts 2> /dev/null
-
-
-    # Add agent section to /etc/puppet/puppet.conf
-    echo "" && echo "[agent]\nserver=puppet" | sudo tee --append /etc/puppet/puppet.conf 2> /dev/null
-
-    sudo puppet agent --enable
-fi
-# Enable puppet and give puppet time to auto sign the certificate and kick off a run.
-    sudo puppet agent --enable
-    sudo puppet agent -t --waitforcert 15
-# added the code below as puppet runs produced a non-zero exit.
-    exit 0

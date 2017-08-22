@@ -1,6 +1,6 @@
 {
   "nodes": {
-    "node01.example.com": {
+    "dc1pweb01.example.com": {
       ":ip": "192.168.32.10",
       "ports": [
 {
@@ -12,7 +12,7 @@
       ":memory": 512,
       ":bootstrap": "bootstrap-node.sh"
     },
-    "web01.example.com": {
+    "dc1dapp01.example.com": {
       ":ip": "192.168.32.20",
       "ports": [
 {
@@ -24,7 +24,7 @@
       ":memory": 512,
       ":bootstrap": "bootstrap-node.sh"
     },
-    "web02.example.com": {
+    "dc2pweb01.example.com": {
       ":ip": "192.168.32.30",
       "ports": [
 {
