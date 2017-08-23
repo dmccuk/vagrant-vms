@@ -3,13 +3,13 @@
 # Builds multiple Puppet Agent Nodes using JSON config file
 # Author: Gary A. Stafford - Updated by Dennis McCarthy
 
-# read vm and chef configurations from JSON files
+# read vm from JSON files
 nodes_config = (JSON.parse(File.read("nodes.json")))['nodes']
 
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.box = "ubuntu/xenial64"
+  config.vm.box = "ubuntu/xenial64" # Ubuntu 16.04
   config.vm.synced_folder ".", "/vagrant", disabled: true
 
   nodes_config.each do |node|
